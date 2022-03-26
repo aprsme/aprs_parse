@@ -102,17 +102,20 @@ defmodule AprsParse.Parser do
       with to <- String.trim(addressee),
            message_text <- String.trim(result["message"]),
            message_number <- result["message_number"] do
-        %{
-          to: to,
-          message_text: message_text,
-          message_number: message_number
-        }
+        {:ok,
+         %{
+           to: to,
+           message_text: message_text,
+           message_number: message_number
+         }}
       else
         true ->
           Logger.debug(message_text, label: "not able to parse")
+          {:error, "Unable to parse"}
       end
     else
       Logger.debug(message_text, label: "not able to parse")
+      {:error, "Unable to parse"}
     end
   end
 
