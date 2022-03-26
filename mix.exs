@@ -33,6 +33,7 @@ defmodule AprsParse.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.21", only: :dev},
+      {:certifi, "~> 2.9"},
       {:credo, "~> 1.4 ", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.14", only: :test}
     ]
