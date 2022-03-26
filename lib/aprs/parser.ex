@@ -3,7 +3,7 @@ defmodule AprsParse.Parser do
   Main parsing library
   """
   use Bitwise
-  alias AprsParse.Types.Mic_e
+  alias AprsParse.Types.MicE
 
   def parse(message) do
     [sender, path, data] = String.split(message, [">", ":"], parts: 3)
