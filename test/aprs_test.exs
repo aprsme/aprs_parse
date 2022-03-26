@@ -51,7 +51,7 @@ defmodule AprsParseTest do
 
   test "mic_e" do
     sut = AprsParse.Parser.parse_mic_e("T7SYWP", ~s(`\(_fn"Oj/))
-    assert %AprsParse.Types.Mic_e{} = sut
+    assert %AprsParse.Types.MicE{} = sut
   end
 
   test "weird format" do

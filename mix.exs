@@ -11,7 +11,8 @@ defmodule AprsParse.MixProject do
       description: description(),
       package: package(),
       name: "aprs_parse",
-      source_url: "https://github.com/Matt-Hornsby/aprs_parse"
+      source_url: "https://github.com/aprsme/aprs_parse",
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
