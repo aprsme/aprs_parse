@@ -12,7 +12,13 @@ defmodule AprsParse.MixProject do
       package: package(),
       name: "aprs_parse",
       source_url: "https://github.com/aprsme/aprs_parse",
-      test_coverage: [tool: ExCoveralls]
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
