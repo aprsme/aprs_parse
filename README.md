@@ -2,6 +2,8 @@
 
 **Parse raw APRS packets into meaningful data**
 
+[![Coverage Status](https://coveralls.io/repos/github/aprsme/aprs_parse/badge.svg?branch=main)](https://coveralls.io/github/aprsme/aprs_parse?branch=main)
+
 Turn this:
 ```
 SNOPAS>APN391,qAR,VCAPK:!4725.13NS12124.48W#PHG4540W2,WAn-n,Snoqualmie Pass
