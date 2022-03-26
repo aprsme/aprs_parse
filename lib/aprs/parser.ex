@@ -4,6 +4,7 @@ defmodule AprsParse.Parser do
   """
   use Bitwise
   alias AprsParse.Types.MicE
+  require Logger
 
   def parse(message) do
     [sender, path, data] = String.split(message, [">", ":"], parts: 3)
@@ -97,11 +98,18 @@ defmodule AprsParse.Parser do
     regex = ~r/^(?<message>.*?)(?:{(?<message_number>\w+))?$/i
     result = find_matches(regex, message_text)
 
-    %{
-      to: String.trim(addressee),
-      message_text: String.trim(result["message"]),
-      message_number: result["message_number"]
-    }
+    with to <- String.trim(addressee),
+         message_text <- String.trim(result["message"]),
+         message_number <- result["message_number"] do
+      %{
+        to: to,
+        message_text: message_text,
+        message_number: message_number
+      }
+    else
+      true ->
+        Logger.debug(message_text, label: "not able to parse")
+    end
   end
 
   def parse_data(_type, _destination, _data), do: nil
