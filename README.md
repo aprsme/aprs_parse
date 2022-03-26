@@ -43,10 +43,10 @@ end
 ```elixir
 iex(1)> raw_message = "SNOPAS>APN391,qAR,VCAPK:!4725.13NS12124.48W#PHG4540W2,WAn-n,Snoqualmie Pass"
 
-iex(2)> parsed_message = Aprs.Parser.parse(raw_message)
+iex(2)> parsed_message = AprsParse.Parser.parse(raw_message)
 ```
 
 ## Notes
-Currently, aprs_parse supports almost all of the many APRS message types. There are a couple of areas marked by TODO in the source code that I haven't fleshed out yet. One of these is for compressed lat/lon coordinates, and the other is for ULTIMETER weather stations. I don't see these very often in practice, but they do come through occasionally. 
+Currently, aprs_parse supports almost all of the many APRS message types. There are a couple of areas marked by TODO in the source code that I haven't fleshed out yet. One of these is for compressed lat/lon coordinates, and the other is for ULTIMETER weather stations. I don't see these very often in practice, but they do come through occasionally.
 
 This library was originally built to parse data coming from APRS-IS, but was split out to be a standalone parser after I got some requests from the ham radio community. If you are interested in tapping into APRS-IS servers to send/receive/process messages, check out the original project: https://github.com/Matt-Hornsby/aprsEx

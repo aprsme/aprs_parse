@@ -1,6 +1,7 @@
-defmodule Aprs.Types.Mic_e do
-  alias __MODULE__
-
+defmodule AprsParse.Types.MicE do
+  @moduledoc """
+  Type struct for MicE
+  """
   defstruct lat_degrees: 0,
             lat_minutes: 0,
             lat_fractional: 0,

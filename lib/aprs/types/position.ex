@@ -1,4 +1,7 @@
-defmodule Aprs.Types.Position do
+defmodule AprsParse.Types.Position do
+  @moduledoc """
+  Positition Decoder
+  """
   alias __MODULE__
   require Logger
 
@@ -39,11 +42,11 @@ defmodule Aprs.Types.Position do
   end
 
   defp convert_garbage_to_zero(value) do
-      try do
+    try do
       _ = String.to_float(value)
       value
-      rescue
-        ArgumentError -> "00000.00"
+    rescue
+      ArgumentError -> "00000.00"
     end
   end
 

@@ -1,6 +1,9 @@
-defmodule Aprs.Parser do
+defmodule AprsParse.Parser do
+  @moduledoc """
+  Main parsing library
+  """
   use Bitwise
-  alias Aprs.Types.Mic_e
+  alias AprsParse.Types.Mic_e
 
   def parse(message) do
     [sender, path, data] = String.split(message, [">", ":"], parts: 3)
@@ -79,13 +82,13 @@ defmodule Aprs.Parser do
 
   def parse_data(
         :message,
-        destination,
+        _destination,
         <<":", addressee::binary-size(9), ":", message_text::binary>>
       ) do
     # Aprs messages can have an optional message number tacked onto the end
     # for the purposes of acknowledging message receipt.
     # The sender tacks the message number onto the end of the message,
-    # and the receiving station is supposed to respond back with an 
+    # and the receiving station is supposed to respond back with an
     # acknowledgement of that message number.
     # Example
     # Sender: Hello world{123
@@ -111,7 +114,7 @@ defmodule Aprs.Parser do
     <<time::binary-size(7), latitude::binary-size(8), sym_table_id::binary-size(1),
       longitude::binary-size(9)>> = date_time_position_data
 
-    position = Aprs.Types.Position.from_aprs(latitude, longitude)
+    position = AprsParse.Types.Position.from_aprs(latitude, longitude)
 
     %{
       position: position,
@@ -125,8 +128,8 @@ defmodule Aprs.Parser do
   end
 
   def decode_compressed_position(
-        <<"/", latitude::binary-size(4), longitude::binary-size(4), symbol::binary-size(1),
-          cs::binary-size(2), compression_type::binary-size(2), rest::binary>>
+        <<"/", latitude::binary-size(4), longitude::binary-size(4), _symbol::binary-size(1),
+          _cs::binary-size(2), _compression_type::binary-size(2), _rest::binary>>
       ) do
     lat = convert_to_base91(latitude)
     lon = convert_to_base91(longitude)
@@ -138,16 +141,16 @@ defmodule Aprs.Parser do
     (v1 - 33) * 91 * 91 * 91 + (v2 - 33) * 91 * 91 + (v3 - 33) * 91 + v4
   end
 
-  def parse_position_without_timestamp(aprs_messaging?, <<"!!", rest::binary>>) do
+  def parse_position_without_timestamp(_aprs_messaging?, <<"!!", _rest::binary>>) do
     # this is an ultimeter weather station. need to parse its weird format
     "TODO: PARSE ULTIMETER DATA"
   end
 
   def parse_position_without_timestamp(
-        aprs_messaging?,
-        <<_dti::binary-size(1), "/", latitude::binary-size(4), longitude::binary-size(4),
-          sym_table_id::binary-size(1), cs::binary-size(2), compression_type::binary-size(1),
-          comment::binary>>
+        _aprs_messaging?,
+        <<_dti::binary-size(1), "/", _latitude::binary-size(4), _longitude::binary-size(4),
+          _sym_table_id::binary-size(1), _cs::binary-size(2), _compression_type::binary-size(1),
+          _comment::binary>>
       ) do
     "TODO: PARSE COMPRESSED LAT/LON"
   end
@@ -157,7 +160,7 @@ defmodule Aprs.Parser do
         <<_dti::binary-size(1), latitude::binary-size(8), sym_table_id::binary-size(1),
           longitude::binary-size(9), symbol_code::binary-size(1), comment::binary>>
       ) do
-    position = Aprs.Types.Position.from_aprs(latitude, longitude)
+    position = AprsParse.Types.Position.from_aprs(latitude, longitude)
 
     %{
       position: position,
@@ -175,7 +178,7 @@ defmodule Aprs.Parser do
           sym_table_id::binary-size(1), longitude::binary-size(9), symbol_code::binary-size(1),
           comment::binary>>
       ) do
-    position = Aprs.Types.Position.from_aprs(latitude, longitude)
+    position = AprsParse.Types.Position.from_aprs(latitude, longitude)
 
     %{
       position: position,
@@ -200,7 +203,7 @@ defmodule Aprs.Parser do
     information_data =
       parse_mic_e_information(information_field, destination_data.longitude_offset)
 
-    %Mic_e{
+    %MicE{
       lat_degrees: destination_data.lat_degrees,
       lat_minutes: destination_data.lat_minutes,
       lat_fractional: destination_data.lat_fractional,

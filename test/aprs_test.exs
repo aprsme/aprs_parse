@@ -1,6 +1,6 @@
-defmodule AprsTest do
+defmodule AprsParseTest do
   use ExUnit.Case
-  alias Aprs.Parser
+  alias AprsParse.Parser
 
   test "timestamped position" do
     aprs_message =
@@ -50,8 +50,8 @@ defmodule AprsTest do
   end
 
   test "mic_e" do
-    sut = Aprs.Parser.parse_mic_e("T7SYWP", ~s(`\(_fn"Oj/))
-    assert %Aprs.Types.Mic_e{} = sut
+    sut = AprsParse.Parser.parse_mic_e("T7SYWP", ~s(`\(_fn"Oj/))
+    assert %AprsParse.Types.Mic_e{} = sut
   end
 
   test "weird format" do

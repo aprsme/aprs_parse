@@ -1,4 +1,4 @@
-defmodule Aprs.MixProject do
+defmodule AprsParse.MixProject do
   use Mix.Project
 
   def project do
